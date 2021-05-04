@@ -158,8 +158,8 @@
     <ClInclude Include="include\ithlib\v3\notation.h" />
     <ClInclude Include="include\ithlib\v3\serialize.h" />
     <ClInclude Include="include\ithlib\v3\slot_tables.h" />
-    <ClInclude Include="nstring.h" />
-    <ClInclude Include="slot.h" />
+    <ClInclude Include="include\ithlib\nstring.h" />
+    <ClInclude Include="include\ithlib\v3\abbreviations.h" />
     <ClInclude Include="utf16_console.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

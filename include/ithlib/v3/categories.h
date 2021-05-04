@@ -10,6 +10,56 @@ namespace ithkuil
 {
 	namespace v3
 	{
+		enum class pattern_t : std::uint8_t
+		{
+			p1,
+			p2,
+			p3
+		};
+
+		enum class stem_t : std::uint8_t
+		{
+			s1,
+			s2,
+			s3
+		};
+
+		enum class designation_t : std::uint8_t
+		{
+			informal,
+			formal
+		};
+
+		enum class designated_stem_t : std::uint8_t
+		{
+			iflp1s1,
+			iflp1s2,
+			iflp1s3,
+			iflp2s1,
+			iflp2s2,
+			iflp2s3,
+			iflp3s1,
+			iflp3s2,
+			iflp3s3,
+			fmlp1s1,
+			fmlp1s2,
+			fmlp1s3,
+			fmlp2s1,
+			fmlp2s2,
+			fmlp2s3,
+			fmlp3s1,
+			fmlp3s2,
+			fmlp3s3
+		};
+
+		enum class function_t : std::uint8_t
+		{
+			stative,
+			dynamic,
+			manifestive,
+			descriptive
+		};
+
 		enum class configuration_t : std::uint8_t
 		{
 			uniplex,
@@ -63,10 +113,28 @@ namespace ithkuil
 			amalgamate
 		};
 
-		enum class designation_t : std::uint8_t
+		enum class version_t : std::uint8_t
 		{
-			informal,
-			formal
+			processual,
+			completive,
+			ineffectual,
+			incompletive,
+			positive,
+			effective
+		};
+
+		enum class format_t : std::uint8_t
+		{
+			none,
+			schematic,
+			instrumentative,
+			authoritive,
+			resultative,
+			subsequent,
+			concommitant,
+			objective,
+			precurrent,
+			affinitive
 		};
 
 		enum class ccase_t : std::uint8_t
@@ -189,24 +257,10 @@ namespace ithkuil
 			comparative8c
 		};
 
-		enum class function_t : std::uint8_t
+		enum class relation_t : std::uint8_t
 		{
-			stative,
-			dynamic,
-			manifestive,
-			descriptive
-		};
-
-		enum class mood_t : std::uint8_t
-		{
-			factual,
-			subjunctive,
-			assumptive,
-			speculative,
-			counterfactive,
-			hypothetical,
-			implicative,
-			ascriptive
+			unframed,
+			framed
 		};
 
 		enum class illocution_t : std::uint8_t
@@ -219,10 +273,16 @@ namespace ithkuil
 			declarative
 		};
 
-		enum class relation_t : std::uint8_t
+		enum class mood_t : std::uint8_t
 		{
-			unframed,
-			framed
+			factual,
+			subjunctive,
+			assumptive,
+			speculative,
+			counterfactive,
+			hypothetical,
+			implicative,
+			ascriptive
 		};
 
 		enum class phase_t : std::uint8_t
@@ -267,16 +327,6 @@ namespace ithkuil
 			participative,
 			indicative,
 			mutual
-		};
-
-		enum class version_t : std::uint8_t
-		{
-			processual,
-			completive,
-			ineffectual,
-			incompletive,
-			positive,
-			effective
 		};
 
 		enum class validation_t : std::uint8_t
@@ -339,59 +389,6 @@ namespace ithkuil
 			consumptive
 		};
 
-		enum class bias_t : std::uint8_t
-		{
-			none,
-			assurative,
-			hyperbolic,
-			coincidental,
-			acceptive,
-			reactive,
-			stupefactive,
-			contemplative,
-			desperative,
-			revelative,
-			gratificative,
-			solicitive,
-			selective,
-			ironic,
-			exasperative,
-			literal,
-			corrective,
-			euphemistic,
-			skeptical,
-			cynical,
-			contemptive,
-			dismissive,
-			indignative,
-			suggestive,
-			propositive,
-			assurative_intensive = 0x21,
-			hyperbolic_intensive,
-			coincidental_intensive,
-			acceptive_intensive,
-			reactive_intensive,
-			stupefactive_intensive,
-			contemplative_intensive,
-			desperative_intensive,
-			revelative_intensive,
-			gratificative_intensive,
-			solicitive_intensive,
-			selective_intensive,
-			ironic_intensive,
-			exasperative_intensive,
-			literal_intensive,
-			corrective_intensive,
-			euphemistic_intensive,
-			skeptical_intensive,
-			cynical_intensive,
-			contemptive_intensive,
-			dismissive_intensive,
-			indignative_intensive,
-			suggestive_intensive,
-			propositive_intensive,
-		};
-
 		enum class modality_t : std::uint8_t
 		{
 			none,
@@ -450,28 +447,125 @@ namespace ithkuil
 			subequative_absolute
 		};
 
-		// TODO Reorder
-		enum class format : std::uint8_t
+		enum class bias_t : std::uint8_t
 		{
 			none,
-			schematic,
-			instrumentative,
-			authoritive,
-			resultative,
-			subsequent,
-			concommitant,
-			objective,
-			affinitive,
-			precurrent
+			assurative,
+			hyperbolic,
+			coincidental,
+			acceptive,
+			reactive,
+			stupefactive,
+			contemplative,
+			desperative,
+			revelative,
+			gratificative,
+			solicitive,
+			selective,
+			ironic,
+			exasperative,
+			literal,
+			corrective,
+			euphemistic,
+			skeptical,
+			cynical,
+			contemptive,
+			dismissive,
+			indignative,
+			suggestive,
+			propositive,
+			assurative_intensive = 0x21,
+			hyperbolic_intensive,
+			coincidental_intensive,
+			acceptive_intensive,
+			reactive_intensive,
+			stupefactive_intensive,
+			contemplative_intensive,
+			desperative_intensive,
+			revelative_intensive,
+			gratificative_intensive,
+			solicitive_intensive,
+			selective_intensive,
+			ironic_intensive,
+			exasperative_intensive,
+			literal_intensive,
+			corrective_intensive,
+			euphemistic_intensive,
+			skeptical_intensive,
+			cynical_intensive,
+			contemptive_intensive,
+			dismissive_intensive,
+			indignative_intensive,
+			suggestive_intensive,
+			propositive_intensive,
 		};
 
-		enum class cregister_t : std::uint8_t
+		enum class referent_t : std::uint8_t
 		{
-			narrative,
-			discursive,
-			parenthetical,
-			cogitant,
-			impressionistic,
+			m1,
+			m1_m2,
+			m1_u2,
+			m2,
+			u2,
+			ma3,
+			ua3,
+			collective,
+			av,
+			aind,
+			mx,
+			aimp,
+			m1_ma3,
+			m1_ua3,
+			m2_ma3,
+			m2_ua3,
+			u2_ma3,
+			u2_ua3,
+			m1_m2_ma3,
+			m1_m2_ua3,
+			m1_u2_ma3,
+			m1_u2_ua3,
+			m1_mx,
+			m1_m2_mx,
+			m1_u2_mx,
+			m2_mx,
+			u2_mx,
+			mi3,
+			ui3,
+			abstract,
+			uvsi3,
+			indi3,
+			obviative,
+			impi3,
+			m1_mi3,
+			m1_ui3,
+			m2_mi3,
+			m2_ui3,
+			u2_mi3,
+			u2_ui3,
+			m1_m2_mi3,
+			m1_m2_ui3,
+			m1_u2_mi3,
+			m1_u2_ui3
+		};
+
+		enum class suffix_type_t
+		{
+			t1,
+			t2,
+			t3
+		};
+
+		enum class suffix_degree_t
+		{
+			d1,
+			d2,
+			d3,
+			d4,
+			d5,
+			d6,
+			d7,
+			d8,
+			d9
 		};
 
 		enum class suffix_t : std::uint16_t
@@ -718,67 +812,18 @@ namespace ithkuil
 			fe11,
 			fe12
 		};
+	}
 
-		enum class referent_t : std::uint8_t
+	namespace v31
+	{
+		enum class cregister_t : std::uint8_t
 		{
-			m1,
-			m1_m2,
-			m1_u2,
-			m2,
-			u2,
-			ma3,
-			ua3,
-			collective,
-			av,
-			aind,
-			mx,
-			aimp,
-			m1_ma3,
-			m1_ua3,
-			m2_ma3,
-			m2_ua3,
-			u2_ma3,
-			u2_ua3,
-			m1_m2_ma3,
-			m1_m2_ua3,
-			m1_u2_ma3,
-			m1_u2_ua3,
-			m1_mx,
-			m1_m2_mx,
-			m1_u2_mx,
-			m2_mx,
-			u2_mx,
-			mi3,
-			ui3,
-			abstract,
-			uvsi3,
-			indi3,
-			obviative,
-			impi3,
-			m1_mi3,
-			m1_ui3,
-			m2_mi3,
-			m2_ui3,
-			u2_mi3,
-			u2_ui3,
-			m1_m2_mi3,
-			m1_m2_ui3,
-			m1_u2_mi3,
-			m1_u2_ui3
+			narrative,
+			discursive,
+			parenthetical,
+			cogitant,
+			impressionistic,
 		};
-
-		// optional via 0
-		using root_t = std::uint32_t;
-		// starts with 1
-		using stem_t = std::uint8_t;
-		// starts with 1
-		using pattern_t = std::uint8_t;
-		// starts with 1
-		using type_t = std::uint8_t;
-		// starts with 1
-		using degree_t = std::uint8_t;
-		// optional via 0, starts with 1
-		using topic_idx_t = std::uint8_t;
 	}
 }
 

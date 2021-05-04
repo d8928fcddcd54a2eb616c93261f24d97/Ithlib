@@ -17,878 +17,115 @@ namespace ithkuil
 {
 	namespace v3
 	{
-		enum class configuration_t : std::uint8_t
-		{
-			uniplex,
-			duplex,
-			discrete,
-			aggregative,
-			segmentative,
-			componential,
-			coherent,
-			composite,
-			multiform
-		};
-
-		enum class affiliation_t : std::uint8_t
-		{
-			consolidative,
-			associative,
-			variative,
-			coalescent
-		};
-
-		enum class perspective_t : std::uint8_t
-		{
-			monadic,
-			unbounded,
-			nomic,
-			abstract
-		};
-
-		enum class extension_t : std::uint8_t
-		{
-			delimitive,
-			proximal,
-			inceptive,
-			terminative,
-			depletive,
-			graduative
-		};
-
-		enum class essence_t : std::uint8_t
-		{
-			normal,
-			representative
-		};
-
-		enum class context_t : std::uint8_t
-		{
-			existential,
-			functional,
-			representational,
-			amalgamate
-		};
-
-		enum class designation_t : std::uint8_t
-		{
-			informal,
-			formal
-		};
-
-		enum class case_t : std::uint8_t
-		{
-			// transrelative
-
-			oblique,
-			inducive,
-			absolutive,
-			ergative,
-			effectuative,
-			affective,
-			dative,
-			instrumental,
-			activative,
-			derivative,
-			situative,
-
-			// possessive
-
-			possessive,
-			proprietive,
-			genitive,
-			attributive,
-			productive,
-			interpretative,
-			originative,
-
-			// associative
-
-			partitive,
-			contrastive,
-			compositive,
-			predicative,
-			mediative,
-			applicative,
-			purposive,
-			considerative,
-			essive,
-			assimilative,
-			functive,
-			transformative,
-			referential,
-			classificative,
-			conductive,
-			interdependent,
-			benefactive,
-			transpositive,
-			commutative,
-			comitative,
-			conjunctive,
-			utilitative,
-			abessive,
-			conversive,
-			correlative,
-			dependent,
-			provisional,
-			postulative,
-			concessive,
-			exceptive,
-			aversive,
-			comparative,
-
-			// temporal
-
-			simultaneitive,
-			assessive,
-			concursive,
-			acessive,
-			diffusive,
-			periodic,
-			prolapsive,
-			precursive,
-			postcursive,
-			elapsive,
-			allapsive,
-			interpolative,
-			episodic,
-			prolimitive,
-			limitative,
-
-			// spatial
-
-			locative,
-			orientative,
-			procursive,
-			allative,
-			ablative,
-			navigative,
-
-			// vocative
-
-			vocative,
-
-			// comparison cases
-
-			comparative1a,
-			comparative2a,
-			comparative3a,
-			comparative4a,
-			comparative5a,
-			comparative6a,
-			comparative7a,
-			comparative8a,
-			comparative1b,
-			comparative2b,
-			comparative3b,
-			comparative4b,
-			comparative5b,
-			comparative6b,
-			comparative7b,
-			comparative8b,
-			comparative1c,
-			comparative2c,
-			comparative3c,
-			comparative4c,
-			comparative5c,
-			comparative6c,
-			comparative7c,
-			comparative8c
-		};
-
-		enum class function_t : std::uint8_t
-		{
-			stative,
-			dynamic,
-			manifestive,
-			descriptive
-		};
-
-		enum class mood_t : std::uint8_t
-		{
-			factual,
-			subjunctive,
-			assumptive,
-			speculative,
-			counterfactive,
-			hypothetical,
-			implicative,
-			ascriptive
-		};
-
-		enum class illocution_t : std::uint8_t
-		{
-			assertive,
-			directive,
-			interrogative,
-			admonitive,
-			hortative,
-			declarative
-		};
-
-		enum class relation_t : std::uint8_t
-		{
-			unframed,
-			framed
-		};
-
-		enum class phase_t : std::uint8_t
-		{
-			contextual,
-			punctual,
-			iterative,
-			repetitive,
-			intermittent,
-			recurrent,
-			frequentative,
-			fragmentative,
-			fluctuative
-		};
-
-		enum class sanction_t : std::uint8_t
-		{
-			propositional,
-			epistemic,
-			allegative,
-			imputative,
-			refutative,
-			rebuttative,
-			theoretical,
-			expatiative,
-			axiomatic
-		};
-
-		enum class valence_t : std::uint8_t
-		{
-			monoactive,
-			parallel,
-			corollary,
-			reciprocal,
-			complementary,
-			nonrelational,
-			duplicative,
-			demonstrative,
-			resistive,
-			imitative,
-			contingent,
-			participative,
-			indicative,
-			mutual
-		};
-
-		enum class version_t : std::uint8_t
-		{
-			processual,
-			completive,
-			ineffectual,
-			incompletive,
-			positive,
-			effective
-		};
-
-		enum class validation_t : std::uint8_t
-		{
-			// non-hearsay
-
-			confirmative,
-			affirmative,
-			reportive,
-			inferential,
-			intuitive,
-
-			// hearsay
-
-			presumptive,
-			presumptive2,
-			purportive,
-			purportive2,
-			conjectural,
-			dubitative,
-			tentative,
-			putative,
-			improbable
-		};
-
-		enum class aspect_t : std::uint8_t
-		{
-			none,
-			retrospective,
-			prospective,
-			habitual,
-			progressive,
-			imminent,
-			precessive,
-			regulative,
-			experiential,
-			resumptive,
-			cessative,
-			recessative,
-			pausal,
-			regressive,
-			preclusive,
-			continuative,
-			incessative,
-			preemptive,
-			climactic,
-			protractive,
-			temporary,
-			motive,
-			consequential,
-			sequential,
-			expeditive,
-			disclusive,
-			conclusive,
-			culminative,
-			intermediative,
-			tardative,
-			transitional,
-			intercommutative,
-			consumptive
-		};
-
-		enum class bias_t : std::uint8_t
-		{
-			none,
-			assurative,
-			hyperbolic,
-			coincidental,
-			acceptive,
-			reactive,
-			stupefactive,
-			contemplative,
-			desperative,
-			revelative,
-			gratificative,
-			solicitive,
-			selective,
-			ironic,
-			exasperative,
-			literal,
-			corrective,
-			euphemistic,
-			skeptical,
-			cynical,
-			contemptive,
-			dismissive,
-			indignative,
-			suggestive,
-			propositive,
-			assurative_intensive = 0x21,
-			hyperbolic_intensive,
-			coincidental_intensive,
-			acceptive_intensive,
-			reactive_intensive,
-			stupefactive_intensive,
-			contemplative_intensive,
-			desperative_intensive,
-			revelative_intensive,
-			gratificative_intensive,
-			solicitive_intensive,
-			selective_intensive,
-			ironic_intensive,
-			exasperative_intensive,
-			literal_intensive,
-			corrective_intensive,
-			euphemistic_intensive,
-			skeptical_intensive,
-			cynical_intensive,
-			contemptive_intensive,
-			dismissive_intensive,
-			indignative_intensive,
-			suggestive_intensive,
-			propositive_intensive,
-		};
-
-		enum class modality_t : std::uint8_t
-		{
-			none,
-			desiderative,
-			aspirative,
-			expectative,
-			credential,
-			requisitive,
-			exhortative,
-			opportunitive,
-			capacitative,
-			permissive,
-			potential,
-			compulsory,
-			obligative,
-			impositive,
-			advocative,
-			intentive,
-			anticipative,
-			dispositive,
-			preparative,
-			necessitative,
-			decisive,
-			proclivitive,
-			voluntative,
-			accordative,
-			inclinative,
-			compulsive,
-			divertive,
-			devotive,
-			preferential,
-			impressional,
-			promissory
-		};
-
-		enum class level_t : std::uint8_t
-		{
-			none,
-			equative_relative,
-			surpassive_relative,
-			deficient_relative,
-			optimal_relative,
-			minimal_relative,
-			superlative_relative,
-			inferior_relative,
-			superequative_relative,
-			subequative_relative,
-			equative_absolute,
-			surpassive_absolute,
-			deficient_absolute,
-			optimal_absolute,
-			minimal_absolute,
-			superlative_absolute,
-			inferior_absolute,
-			superequative_absolute,
-			subequative_absolute
-		};
-
-		// TODO Reorder
-		enum class format : std::uint8_t
-		{
-			none,
-			schematic,
-			instrumentative,
-			authoritive,
-			resultative,
-			subsequent,
-			concommitant,
-			objective,
-			affinitive,
-			precurrent
-		};
-
-		enum class cregister_t : std::uint8_t
-		{
-			narrative,
-			discursive,
-			parenthetical,
-			cogitant,
-			impressionistic,
-		};
-
-		enum class suffix_t : std::uint16_t
-		{
-			// demonstrative
-
-			def,
-			dsr,
-			inl,
-			ext,
-			fam,
-			sim,
-
-			// deictic
-
-			dex,
-			dxx,
-
-			// sequential
-
-			seq,
-			sqt,
-			sqc,
-
-			// coordinative
-
-			coo,
-			ctr,
-			dst,
-
-			// temporal
-
-			tpi,
-			tpd,
-			frq,
-			tpr,
-			tpp,
-			atc,
-			lat,
-			itn,
-			rpn,
-			cal,
-
-			// quantifying
-
-			dgr,
-			ptw,
-			ptt,
-			cnm,
-			suf,
-			exn,
-			exd,
-
-			// modulative
-
-			rco,
-			tfi,
-			tfv,
-			cri,
-			crv,
-			mdl,
-			fls,
-			icr,
-			dcr,
-			icd,
-			dci,
-			idr,
-			mvt,
-
-			// qualifying
-
-			siz,
-			sco,
-			aft,
-			qua,
-			unq,
-			ipt,
-			cnq,
-			ntr,
-			beh,
-			apr,
-			hrc,
-			frm,
-			typ,
-			pty,
-			itg,
-			mdn,
-
-			// modifying
-
-			na1,
-			na2,
-			na3,
-			na4,
-			plv,
-			dev,
-			rea,
-			scs,
-			cap,
-			prb,
-
-			// adverbial
-
-			str,
-			frc,
-			ity,
-			spd,
-			cfd,
-			efi,
-			err,
-			mat,
-			sbt,
-			drc,
-			sud,
-			pcn,
-			cnc,
-			sph,
-			cvt,
-			eft,
-			dsg,
-			dcs,
-			ctn,
-			phy,
-
-			// modality
-
-			md01,
-			md02,
-			md03,
-			md04,
-			md05,
-			md06,
-			md07,
-			md08,
-			md09,
-			md10,
-			md11,
-			md12,
-			md13,
-			md14,
-			md15,
-			md16,
-			md17,
-			md18,
-			md19,
-			md20,
-			md21,
-			md22,
-			md23,
-			md24,
-			md25,
-			md26,
-			md27,
-			md28,
-			md29,
-			md30,
-			md31,
-			md32,
-			md33,
-
-			// agential/participant
-
-			agc,
-			rol,
-			ute,
-			cns,
-			mec,
-			bod,
-			dbi,
-			soc,
-			oau,
-			aut,
-			rsn,
-			mta,
-			xpt,
-			dlb,
-			mot,
-			enb,
-			agn,
-			imp,
-
-			// miscellaneous
-
-			tpf,
-			swr,
-			pla,
-			apt,
-			tem,
-			ptf,
-			ptg,
-			met,
-			ssd,
-			sbs,
-			sps,
-			atn,
-			dpr,
-			sep,
-			sdp,
-			new_,
-			cos,
-			wak,
-			sct,
-			nnn,
-			lvl,
-			fns,
-			fms,
-			trf,
-			cvy,
-			fea,
-			stg,
-			cgl,
-			inb,
-			ple,
-			acq,
-			tal,
-			rnc,
-			dpt,
-			eng,
-			opf,
-			mlr,
-			hg1,
-			hg2,
-			phs,
-
-			// locational
-
-			lct,
-			pxm,
-			ctc,
-			vwp,
-
-			// format expansion
-
-			fe01,
-			fe02,
-			fe03,
-			fe04,
-			fe05,
-			fe06,
-			fe07,
-			fe08,
-			fe09,
-			fe10,
-			fe11,
-			fe12
-		};
-
-		enum class referent_t : std::uint8_t
-		{
-			m1,
-			m1_m2,
-			m1_u2,
-			m2,
-			u2,
-			ma3,
-			ua3,
-			collective,
-			av,
-			aind,
-			mx,
-			aimp,
-			m1_ma3,
-			m1_ua3,
-			m2_ma3,
-			m2_ua3,
-			u2_ma3,
-			u2_ua3,
-			m1_m2_ma3,
-			m1_m2_ua3,
-			m1_u2_ma3,
-			m1_u2_ua3,
-			m1_mx,
-			m1_m2_mx,
-			m1_u2_mx,
-			m2_mx,
-			u2_mx,
-			mi3,
-			ui3,
-			abstract,
-			uvsi3,
-			indi3,
-			obviative,
-			impi3,
-			m1_mi3,
-			m1_ui3,
-			m2_mi3,
-			m2_ui3,
-			u2_mi3,
-			u2_ui3,
-			m1_m2_mi3,
-			m1_m2_ui3,
-			m1_u2_mi3,
-			m1_u2_ui3
-		};
-
-		// optional via 0
-		using root_t = std::uint32_t;
-		// starts with 1
-		using stem_t = std::uint8_t;
-		// starts with 1
-		using pattern_t = std::uint8_t;
-		// starts with 1
-		using type_t = std::uint8_t;
-		// starts with 1
-		using degree_t = std::uint8_t;
-		// optional via 0, starts with 1
-		using topic_idx_t = std::uint8_t;
-
-		struct vxc
-		{
-			type_t _type;
-			degree_t _degree;
-			suffix_t _suffix;
-		};
-
-		enum class vc_mutation : std::uint8_t
-		{
-			none,
-			u_intact,
-			u_mutated,
-			i_diphtong
-		};
-
-		enum class civi_mutation : std::uint8_t
-		{
-			none,
-			w_value,
-			y_intact,
-			y_mutated
-		};
-
-		// TODO consider bitfields
-
-		struct formative
-		{
-			root_t root;
-			root_t inc_root;
-			pattern_t pttn;
-			stem_t stem;
-			designation_t dsgn;
-			relation_t rltn;
-			configuration_t cnfg;
-			affiliation_t affn;
-			perspective_t prsp;
-			extension_t extn;
-			essence_t essc;
-			function_t fncn;
-			context_t cntx;
-			pattern_t inc_pttn;
-			stem_t inc_stem;
-			designation_t inc_dsgn;
-			format frmt;
-			case_t _case;
-			std::vector<case_t> inc_cases;
-			std::vector<vxc> vxcs;
-			std::optional<std::tuple<perspective_t, configuration_t>> inc_pc;
-			mood_t _mood;
-			sanction_t sncn;
-			phase_t phse;
-			illocution_t illn;
-			valence_t vlnc;
-			version_t vrsn;
-			validation_t vldn;
-			aspect_t aspt1;
-			aspect_t aspt2;
-			bias_t _bias;
-		};
-
-		struct srpr_opt
-		{
-			affiliation_t _affiliation;
-			configuration_t _configuration;
-			essence_t _essence;
-			bias_t _bias;
-			std::vector<vxc> _vxcs;
-		};
-
-		struct srpr_adjunct
-		{
-			referent_t _referent;
-			case_t _case;
-			std::variant<std::monostate, srpr_opt, case_t> _opt;
-		};
-
-		struct drpr_opt
-		{
-			affiliation_t _affiliation1;
-			configuration_t _configuration1;
-			bias_t _bias;
-		};
-
-		struct drpr_adjunct
-		{
-			referent_t _referent1;
-			referent_t _referent2;
-			affiliation_t _affiliation2;
-			configuration_t _configuration2;
-			case_t _case1;
-			case_t _case2;
-			essence_t _essence1;
-			essence_t _essence2;
-			std::optional<drpr_opt> _opt;
-		};
-
-		struct case_adjunct
-		{
-			case_t _case;
-			topic_idx_t _tidx;
-		};
-
-		using form = std::variant<formative, srpr_adjunct, drpr_adjunct, vxc, bias_t, aspect_t>;
+		
+	//	using type_t = std::uint8_t;
+	//	// starts with 1
+	//	using degree_t = std::uint8_t;
+	//	// optional via 0, starts with 1
+	//	using topic_idx_t = std::uint8_t;
+
+	//	struct vxc
+	//	{
+	//		type_t _type;
+	//		degree_t _degree;
+	//		suffix_t _suffix;
+	//	};
+
+	//	enum class vc_mutation : std::uint8_t
+	//	{
+	//		none,
+	//		u_intact,
+	//		u_mutated,
+	//		i_diphtong
+	//	};
+
+	//	enum class civi_mutation : std::uint8_t
+	//	{
+	//		none,
+	//		w_value,
+	//		y_intact,
+	//		y_mutated
+	//	};
+
+	//	// TODO consider bitfields
+
+	//	struct formative
+	//	{
+	//		root_t root;
+	//		root_t inc_root;
+	//		pattern_t pttn;
+	//		stem_t stem;
+	//		designation_t dsgn;
+	//		relation_t rltn;
+	//		configuration_t cnfg;
+	//		affiliation_t affn;
+	//		perspective_t prsp;
+	//		extension_t extn;
+	//		essence_t essc;
+	//		function_t fncn;
+	//		context_t cntx;
+	//		pattern_t inc_pttn;
+	//		stem_t inc_stem;
+	//		designation_t inc_dsgn;
+	//		format_t frmt;
+	//		ccase_t _case;
+	//		std::vector<ccase_t> inc_cases;
+	//		std::vector<vxc> vxcs;
+	//		std::optional<std::tuple<perspective_t, configuration_t>> inc_pc;
+	//		mood_t _mood;
+	//		sanction_t sncn;
+	//		phase_t phse;
+	//		illocution_t illn;
+	//		valence_t vlnc;
+	//		version_t vrsn;
+	//		validation_t vldn;
+	//		aspect_t aspt1;
+	//		aspect_t aspt2;
+	//		bias_t _bias;
+	//	};
+
+	//	struct srpr_opt
+	//	{
+	//		affiliation_t _affiliation;
+	//		configuration_t _configuration;
+	//		essence_t _essence;
+	//		bias_t _bias;
+	//		std::vector<vxc> _vxcs;
+	//	};
+
+	//	struct srpr_adjunct
+	//	{
+	//		referent_t _referent;
+	//		case_t _case;
+	//		std::variant<std::monostate, srpr_opt, case_t> _opt;
+	//	};
+
+	//	struct drpr_opt
+	//	{
+	//		affiliation_t _affiliation1;
+	//		configuration_t _configuration1;
+	//		bias_t _bias;
+	//	};
+
+	//	struct drpr_adjunct
+	//	{
+	//		referent_t _referent1;
+	//		referent_t _referent2;
+	//		affiliation_t _affiliation2;
+	//		configuration_t _configuration2;
+	//		ccase_t _case1;
+	//		ccase_t _case2;
+	//		essence_t _essence1;
+	//		essence_t _essence2;
+	//		std::optional<drpr_opt> _opt;
+	//	};
+
+	//	struct case_adjunct
+	//	{
+	//		ccase_t _case;
+	//		topic_idx_t _tidx;
+	//	};
+
+	//	using form = std::variant<formative, srpr_adjunct, drpr_adjunct, vxc, bias_t, aspect_t>;
 	}
 }
