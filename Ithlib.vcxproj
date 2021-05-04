@@ -152,11 +152,13 @@
     <ClCompile Include="Ithkuil.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="include\ithlib\ir.h" />
-    <ClInclude Include="include\ithlib\morphology.h" />
-    <ClInclude Include="include\ithlib\notation.h" />
-    <ClInclude Include="include\ithlib\serialize.h" />
-    <ClInclude Include="include\ithlib\slot_tables.h" />
+    <ClInclude Include="include\ithlib\v3\categories.h" />
+    <ClInclude Include="include\ithlib\v3\ir.h" />
+    <ClInclude Include="include\ithlib\v3\morphology.h" />
+    <ClInclude Include="include\ithlib\v3\notation.h" />
+    <ClInclude Include="include\ithlib\v3\serialize.h" />
+    <ClInclude Include="include\ithlib\v3\slot_tables.h" />
+    <ClInclude Include="nstring.h" />
     <ClInclude Include="slot.h" />
     <ClInclude Include="utf16_console.h" />
   </ItemGroup>

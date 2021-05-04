@@ -1,21 +1,16 @@
-#pragma once
+// Categories
+//
 
-#include <vector>
-#include <string>
-#include <tuple>
-#include <optional>
-#include <variant>
-#include <array>
-#include <type_traits>
-#include <iostream>
-#include <stdexcept>
+#ifndef ITHLIB_CATEGORIES_H
+#define ITHLIB_CATEGORIES_H
+
 #include <cstdint>
 
 namespace ithkuil
 {
 	namespace v3
 	{
-		enum class configuration : std::uint8_t
+		enum class configuration_t : std::uint8_t
 		{
 			uniplex,
 			duplex,
@@ -28,7 +23,7 @@ namespace ithkuil
 			multiform
 		};
 
-		enum class affiliation : std::uint8_t
+		enum class affiliation_t : std::uint8_t
 		{
 			consolidative,
 			associative,
@@ -36,7 +31,7 @@ namespace ithkuil
 			coalescent
 		};
 
-		enum class perspective : std::uint8_t
+		enum class perspective_t : std::uint8_t
 		{
 			monadic,
 			unbounded,
@@ -44,7 +39,7 @@ namespace ithkuil
 			abstract
 		};
 
-		enum class extension : std::uint8_t
+		enum class extension_t : std::uint8_t
 		{
 			delimitive,
 			proximal,
@@ -54,13 +49,13 @@ namespace ithkuil
 			graduative
 		};
 
-		enum class essence : std::uint8_t
+		enum class essence_t : std::uint8_t
 		{
 			normal,
 			representative
 		};
 
-		enum class context : std::uint8_t
+		enum class context_t : std::uint8_t
 		{
 			existential,
 			functional,
@@ -68,13 +63,13 @@ namespace ithkuil
 			amalgamate
 		};
 
-		enum class designation : std::uint8_t
+		enum class designation_t : std::uint8_t
 		{
 			informal,
 			formal
 		};
 
-		enum class case_ : std::uint8_t
+		enum class ccase_t : std::uint8_t
 		{
 			// transrelative
 
@@ -90,9 +85,9 @@ namespace ithkuil
 			derivative,
 			situative,
 
-			// posessive
+			// possessive
 
-			posessive,
+			possessive,
 			proprietive,
 			genitive,
 			attributive,
@@ -136,8 +131,8 @@ namespace ithkuil
 			comparative,
 
 			// temporal
-			simultaneitive,
 
+			simultaneitive,
 			assessive,
 			concursive,
 			acessive,
@@ -194,7 +189,7 @@ namespace ithkuil
 			comparative8c
 		};
 
-		enum class function : std::uint8_t
+		enum class function_t : std::uint8_t
 		{
 			stative,
 			dynamic,
@@ -202,7 +197,7 @@ namespace ithkuil
 			descriptive
 		};
 
-		enum class mood : std::uint8_t
+		enum class mood_t : std::uint8_t
 		{
 			factual,
 			subjunctive,
@@ -214,7 +209,7 @@ namespace ithkuil
 			ascriptive
 		};
 
-		enum class illocution : std::uint8_t
+		enum class illocution_t : std::uint8_t
 		{
 			assertive,
 			directive,
@@ -224,13 +219,13 @@ namespace ithkuil
 			declarative
 		};
 
-		enum class relation : std::uint8_t
+		enum class relation_t : std::uint8_t
 		{
 			unframed,
 			framed
 		};
 
-		enum class phase : std::uint8_t
+		enum class phase_t : std::uint8_t
 		{
 			contextual,
 			punctual,
@@ -243,7 +238,7 @@ namespace ithkuil
 			fluctuative
 		};
 
-		enum class sanction : std::uint8_t
+		enum class sanction_t : std::uint8_t
 		{
 			propositional,
 			epistemic,
@@ -256,7 +251,7 @@ namespace ithkuil
 			axiomatic
 		};
 
-		enum class valence : std::uint8_t
+		enum class valence_t : std::uint8_t
 		{
 			monoactive,
 			parallel,
@@ -274,7 +269,7 @@ namespace ithkuil
 			mutual
 		};
 
-		enum class version : std::uint8_t
+		enum class version_t : std::uint8_t
 		{
 			processual,
 			completive,
@@ -284,7 +279,7 @@ namespace ithkuil
 			effective
 		};
 
-		enum class validation : std::uint8_t
+		enum class validation_t : std::uint8_t
 		{
 			// non-hearsay
 
@@ -307,7 +302,7 @@ namespace ithkuil
 			improbable
 		};
 
-		enum class aspect : std::uint8_t
+		enum class aspect_t : std::uint8_t
 		{
 			none,
 			retrospective,
@@ -344,7 +339,7 @@ namespace ithkuil
 			consumptive
 		};
 
-		enum class bias : std::uint8_t
+		enum class bias_t : std::uint8_t
 		{
 			none,
 			assurative,
@@ -397,7 +392,7 @@ namespace ithkuil
 			propositive_intensive,
 		};
 
-		enum class modality : std::uint8_t
+		enum class modality_t : std::uint8_t
 		{
 			none,
 			desiderative,
@@ -432,7 +427,7 @@ namespace ithkuil
 			promissory
 		};
 
-		enum class level : std::uint8_t
+		enum class level_t : std::uint8_t
 		{
 			none,
 			equative_relative,
@@ -470,7 +465,7 @@ namespace ithkuil
 			precurrent
 		};
 
-		enum class register_ : std::uint8_t
+		enum class cregister_t : std::uint8_t
 		{
 			narrative,
 			discursive,
@@ -479,7 +474,7 @@ namespace ithkuil
 			impressionistic,
 		};
 
-		enum class suffix : std::uint16_t
+		enum class suffix_t : std::uint16_t
 		{
 			// demonstrative
 
@@ -724,7 +719,7 @@ namespace ithkuil
 			fe12
 		};
 
-		enum class referent : std::uint8_t
+		enum class referent_t : std::uint8_t
 		{
 			m1,
 			m1_m2,
@@ -784,109 +779,7 @@ namespace ithkuil
 		using degree_t = std::uint8_t;
 		// optional via 0, starts with 1
 		using topic_idx_t = std::uint8_t;
-
-		struct vxc
-		{
-			type_t _type;
-			degree_t _degree;
-			suffix _suffix;
-		};
-
-		enum class vc_mutation : std::uint8_t
-		{
-			none,
-			u_intact,
-			u_mutated,
-			i_diphtong
-		};
-
-		enum class civi_mutation : std::uint8_t
-		{
-			none,
-			w_value,
-			y_intact,
-			y_mutated
-		};
-
-		// TODO consider bitfields
-
-		struct formative
-		{
-			root_t root;
-			root_t inc_root;
-			pattern_t pttn;
-			stem_t stem;
-			designation dsgn;
-			relation rltn;
-			configuration cnfg;
-			affiliation affn;
-			perspective prsp;
-			extension extn;
-			essence essc;
-			function fncn;
-			context cntx;
-			pattern_t inc_pttn;
-			stem_t inc_stem;
-			designation inc_dsgn;
-			format frmt;
-			case_ _case;
-			std::vector<case_> inc_cases;
-			std::vector<vxc> vxcs;
-			std::optional<std::tuple<perspective, configuration>> inc_pc;
-			mood _mood;
-			sanction sncn;
-			phase phse;
-			illocution illn;
-			valence vlnc;
-			version vrsn;
-			validation vldn;
-			aspect aspt1;
-			aspect aspt2;
-			bias _bias;
-		};
-
-		struct srpr_opt
-		{
-			affiliation _affiliation;
-			configuration _configuration;
-			essence _essence;
-			bias _bias;
-			std::vector<vxc> _vxcs;
-		};
-
-		struct srpr_adjunct
-		{
-			referent _referent;
-			case_ _case;
-			std::variant<std::monostate, srpr_opt, case_> _opt;
-		};
-
-		struct drpr_opt
-		{
-			affiliation _affiliation1;
-			configuration _configuration1;
-			bias _bias;
-		};
-
-		struct drpr_adjunct
-		{
-			referent _referent1;
-			referent _referent2;
-			affiliation _affiliation2;
-			configuration _configuration2;
-			case_ _case1;
-			case_ _case2;
-			essence _essence1;
-			essence _essence2;
-			std::optional<drpr_opt> _opt;
-		};
-
-		struct case_adjunct
-		{
-			case_ _case;
-			topic_idx_t _tidx;
-		};
-
-		using form = std::variant<formative, srpr_adjunct, drpr_adjunct, vxc, bias, aspect>;
 	}
 }
+
+#endif // !ITHLIB_CATEGORIES_H

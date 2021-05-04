@@ -26,10 +26,10 @@
 #pragma warning(default: 4828)
 #include "include/ithlib/ir.h"
 #include "utf16_console.h"
-#include "include/ithlib/morphology.h"
-#include "include/ithlib/serialize.h"
-#include "include/ithlib/notation.h"
-#include "include/ithlib/slot_tables.h"
+#include "include/ithlib/v3/morphology.h"
+#include "include/ithlib/v3/serialize.h"
+#include "include/ithlib/v3/notation.h"
+#include "include/ithlib/v3/slot_tables.h"
 #include <utf8cpp/utf8.h>
 #include <utf8cpp/utf8/cpp11.h>
 #include <boost/archive/binary_iarchive.hpp>
@@ -79,28 +79,28 @@ namespace ithkuil
 
 			struct formative_state
 			{
-				case_ _case;
+				ccase_t _case;
 				root_t root_;
 				std::optional<root_t> inc_root;
-				std::optional<std::tuple<perspective, configuration>> inc_pc;
-				std::optional<phase> phase_;
-				std::optional<sanction> sanction_;
-				std::optional<illocution> illocution_;
-				std::optional<valence> valence_;
-				std::optional<validation> validation_;
-				std::optional<aspect> aspect_;
-				std::optional<mood> mood_;
+				std::optional<std::tuple<perspective_t, configuration_t>> inc_pc;
+				std::optional<phase_t> phase_;
+				std::optional<sanction_t> sanction_;
+				std::optional<illocution_t> illocution_;
+				std::optional<valence_t> valence_;
+				std::optional<validation_t> validation_;
+				std::optional<aspect_t> aspect_;
+				std::optional<mood_t> mood_;
 				std::optional<v3::newslot::ca::packed_t> ca_;
 				std::optional<v3::newslot::vr::packed_t> vr_;
 				std::optional<v3::newslot::vp::packed_t> vp_;
 				std::optional<v3::newslot::civi::packed_t> civi_;
-				std::optional<std::tuple<context, format>> vf_;
-				std::optional<bias> bias_;
+				std::optional<std::tuple<context_t, format>> vf_;
+				std::optional<bias_t> bias_;
 				std::vector<vxc> vxc_;
-				std::vector<ithkuil::v3::case_> inc_cases;
+				std::vector<ithkuil::v3::ccase_t> inc_cases;
 
 				std::optional<std::tuple<type_t, degree_t>> vx_;
-				std::optional<case_> cm;
+				std::optional<ccase_t> cm;
 				vc_mutation m = vc_mutation::none;
 				bool fe_errors = false;
 			};
@@ -202,43 +202,43 @@ namespace ithkuil
 				template<typename ActionInput, typename... States>
 				static bool apply(const ActionInput& in, formative_state& state, formative_tables& tables, States&&...)
 				{
-					constexpr std::array<std::tuple<v3::perspective, v3::configuration>, 36> fexmap { {
-							/*{ { 1, v3::suffix::fe01 },*/ { v3::perspective::monadic, v3::configuration::uniplex },
-							/*{ { 2, v3::suffix::fe01 },*/ { v3::perspective::monadic, v3::configuration::duplex },
-							/*{ { 3, v3::suffix::fe01 },*/ { v3::perspective::monadic, v3::configuration::discrete },
-							/*{ { 1, v3::suffix::fe02 },*/ { v3::perspective::monadic, v3::configuration::aggregative },
-							/*{ { 2, v3::suffix::fe02 },*/ { v3::perspective::monadic, v3::configuration::segmentative },
-							/*{ { 3, v3::suffix::fe02 },*/ { v3::perspective::monadic, v3::configuration::componential },
-							/*{ { 1, v3::suffix::fe03 },*/ { v3::perspective::monadic, v3::configuration::coherent},
-							/*{ { 2, v3::suffix::fe03 },*/ { v3::perspective::monadic, v3::configuration::composite },
-							/*{ { 3, v3::suffix::fe03 },*/ { v3::perspective::monadic, v3::configuration::multiform },
-							/*{ { 1, v3::suffix::fe04 },*/ { v3::perspective::unbounded, v3::configuration::uniplex },
-							/*{ { 2, v3::suffix::fe04 },*/ { v3::perspective::unbounded, v3::configuration::duplex },
-							/*{ { 3, v3::suffix::fe04 },*/ { v3::perspective::unbounded, v3::configuration::discrete },
-							/*{ { 1, v3::suffix::fe05 },*/ { v3::perspective::unbounded, v3::configuration::aggregative },
-							/*{ { 2, v3::suffix::fe05 },*/ { v3::perspective::unbounded, v3::configuration::segmentative },
-							/*{ { 3, v3::suffix::fe05 },*/ { v3::perspective::unbounded, v3::configuration::componential },
-							/*{ { 1, v3::suffix::fe06 },*/ { v3::perspective::unbounded, v3::configuration::coherent},
-							/*{ { 2, v3::suffix::fe06 },*/ { v3::perspective::unbounded, v3::configuration::composite },
-							/*{ { 3, v3::suffix::fe06 },*/ { v3::perspective::unbounded, v3::configuration::multiform },
-							/*{ { 1, v3::suffix::fe07 },*/ { v3::perspective::nomic, v3::configuration::uniplex },
-							/*{ { 2, v3::suffix::fe07 },*/ { v3::perspective::nomic, v3::configuration::duplex },
-							/*{ { 3, v3::suffix::fe07 },*/ { v3::perspective::nomic, v3::configuration::discrete },
-							/*{ { 1, v3::suffix::fe08 },*/ { v3::perspective::nomic, v3::configuration::aggregative },
-							/*{ { 2, v3::suffix::fe08 },*/ { v3::perspective::nomic, v3::configuration::segmentative },
-							/*{ { 3, v3::suffix::fe08 },*/ { v3::perspective::nomic, v3::configuration::componential },
-							/*{ { 1, v3::suffix::fe09 },*/ { v3::perspective::nomic, v3::configuration::coherent},
-							/*{ { 2, v3::suffix::fe09 },*/ { v3::perspective::nomic, v3::configuration::composite },
-							/*{ { 3, v3::suffix::fe09 },*/ { v3::perspective::nomic, v3::configuration::multiform },
-							/*{ { 1, v3::suffix::fe10 },*/ { v3::perspective::abstract, v3::configuration::uniplex },
-							/*{ { 2, v3::suffix::fe10 },*/ { v3::perspective::abstract, v3::configuration::duplex },
-							/*{ { 3, v3::suffix::fe10 },*/ { v3::perspective::abstract, v3::configuration::discrete },
-							/*{ { 1, v3::suffix::fe11 },*/ { v3::perspective::abstract, v3::configuration::aggregative },
-							/*{ { 2, v3::suffix::fe11 },*/ { v3::perspective::abstract, v3::configuration::segmentative },
-							/*{ { 3, v3::suffix::fe11 },*/ { v3::perspective::abstract, v3::configuration::componential },
-							/*{ { 1, v3::suffix::fe12 },*/ { v3::perspective::abstract, v3::configuration::coherent},
-							/*{ { 2, v3::suffix::fe12 },*/ { v3::perspective::abstract, v3::configuration::composite },
-							/*{ { 3, v3::suffix::fe12 },*/ { v3::perspective::abstract, v3::configuration::multiform },
+					constexpr std::array<std::tuple<v3::perspective_t, v3::configuration_t>, 36> fexmap { {
+							/*{ { 1, v3::suffix_t::fe01 },*/ { v3::perspective_t::monadic, v3::configuration_t::uniplex },
+							/*{ { 2, v3::suffix_t::fe01 },*/ { v3::perspective_t::monadic, v3::configuration_t::duplex },
+							/*{ { 3, v3::suffix_t::fe01 },*/ { v3::perspective_t::monadic, v3::configuration_t::discrete },
+							/*{ { 1, v3::suffix_t::fe02 },*/ { v3::perspective_t::monadic, v3::configuration_t::aggregative },
+							/*{ { 2, v3::suffix_t::fe02 },*/ { v3::perspective_t::monadic, v3::configuration_t::segmentative },
+							/*{ { 3, v3::suffix_t::fe02 },*/ { v3::perspective_t::monadic, v3::configuration_t::componential },
+							/*{ { 1, v3::suffix_t::fe03 },*/ { v3::perspective_t::monadic, v3::configuration_t::coherent},
+							/*{ { 2, v3::suffix_t::fe03 },*/ { v3::perspective_t::monadic, v3::configuration_t::composite },
+							/*{ { 3, v3::suffix_t::fe03 },*/ { v3::perspective_t::monadic, v3::configuration_t::multiform },
+							/*{ { 1, v3::suffix_t::fe04 },*/ { v3::perspective_t::unbounded, v3::configuration_t::uniplex },
+							/*{ { 2, v3::suffix_t::fe04 },*/ { v3::perspective_t::unbounded, v3::configuration_t::duplex },
+							/*{ { 3, v3::suffix_t::fe04 },*/ { v3::perspective_t::unbounded, v3::configuration_t::discrete },
+							/*{ { 1, v3::suffix_t::fe05 },*/ { v3::perspective_t::unbounded, v3::configuration_t::aggregative },
+							/*{ { 2, v3::suffix_t::fe05 },*/ { v3::perspective_t::unbounded, v3::configuration_t::segmentative },
+							/*{ { 3, v3::suffix_t::fe05 },*/ { v3::perspective_t::unbounded, v3::configuration_t::componential },
+							/*{ { 1, v3::suffix_t::fe06 },*/ { v3::perspective_t::unbounded, v3::configuration_t::coherent},
+							/*{ { 2, v3::suffix_t::fe06 },*/ { v3::perspective_t::unbounded, v3::configuration_t::composite },
+							/*{ { 3, v3::suffix_t::fe06 },*/ { v3::perspective_t::unbounded, v3::configuration_t::multiform },
+							/*{ { 1, v3::suffix_t::fe07 },*/ { v3::perspective_t::nomic, v3::configuration_t::uniplex },
+							/*{ { 2, v3::suffix_t::fe07 },*/ { v3::perspective_t::nomic, v3::configuration_t::duplex },
+							/*{ { 3, v3::suffix_t::fe07 },*/ { v3::perspective_t::nomic, v3::configuration_t::discrete },
+							/*{ { 1, v3::suffix_t::fe08 },*/ { v3::perspective_t::nomic, v3::configuration_t::aggregative },
+							/*{ { 2, v3::suffix_t::fe08 },*/ { v3::perspective_t::nomic, v3::configuration_t::segmentative },
+							/*{ { 3, v3::suffix_t::fe08 },*/ { v3::perspective_t::nomic, v3::configuration_t::componential },
+							/*{ { 1, v3::suffix_t::fe09 },*/ { v3::perspective_t::nomic, v3::configuration_t::coherent},
+							/*{ { 2, v3::suffix_t::fe09 },*/ { v3::perspective_t::nomic, v3::configuration_t::composite },
+							/*{ { 3, v3::suffix_t::fe09 },*/ { v3::perspective_t::nomic, v3::configuration_t::multiform },
+							/*{ { 1, v3::suffix_t::fe10 },*/ { v3::perspective_t::abstract, v3::configuration_t::uniplex },
+							/*{ { 2, v3::suffix_t::fe10 },*/ { v3::perspective_t::abstract, v3::configuration_t::duplex },
+							/*{ { 3, v3::suffix_t::fe10 },*/ { v3::perspective_t::abstract, v3::configuration_t::discrete },
+							/*{ { 1, v3::suffix_t::fe11 },*/ { v3::perspective_t::abstract, v3::configuration_t::aggregative },
+							/*{ { 2, v3::suffix_t::fe11 },*/ { v3::perspective_t::abstract, v3::configuration_t::segmentative },
+							/*{ { 3, v3::suffix_t::fe11 },*/ { v3::perspective_t::abstract, v3::configuration_t::componential },
+							/*{ { 1, v3::suffix_t::fe12 },*/ { v3::perspective_t::abstract, v3::configuration_t::coherent},
+							/*{ { 2, v3::suffix_t::fe12 },*/ { v3::perspective_t::abstract, v3::configuration_t::composite },
+							/*{ { 3, v3::suffix_t::fe12 },*/ { v3::perspective_t::abstract, v3::configuration_t::multiform },
 					} };
 
 					const v3::format f { state.vf_ ? std::get<1>(*state.vf_) : v3::format::none };
@@ -266,23 +266,23 @@ namespace ithkuil
 					state.vxc_.erase(std::remove_if(state.vxc_.begin(),
 						state.vxc_.end(),
 						[&fexmap, f, fe, &errors_encountered, fval, &inpc = state.inc_pc, &extcases = state.inc_cases](const v3::vxc& vxc_) {
-						constexpr int fe01 = aux::underlying_cast(v3::suffix::fe01);
-						constexpr int fe12 = aux::underlying_cast(v3::suffix::fe12);
-						int suffix = aux::underlying_cast(vxc_._suffix);
-						if (suffix >= fe01 && suffix <= fe12)
+						constexpr int fe01 = aux::underlying_cast(v3::suffix_t::fe01);
+						constexpr int fe12 = aux::underlying_cast(v3::suffix_t::fe12);
+						int suffix_t = aux::underlying_cast(vxc_._suffix);
+						if (suffix_t >= fe01 && suffix_t <= fe12)
 						{
 							if (!fe)
 							{
 								errors_encountered = true;
 								return false;
 							}
-							const auto [p, c] = fexmap[(suffix - fe01) * 3 + vxc_._type - 1];
+							const auto [p, c] = fexmap[(suffix_t - fe01) * 3 + vxc_._type - 1];
 							if (inpc)
 							{
 								const auto [ep, ec] = *inpc;
 								if (p == ep && c == ec)
 								{
-									extcases.push_back(static_cast<v3::case_>(fval * 9 + vxc_._degree - 1));
+									extcases.push_back(static_cast<v3::ccase_t>(fval * 9 + vxc_._degree - 1));
 									return true;
 								}
 								else
@@ -293,7 +293,7 @@ namespace ithkuil
 							else
 							{
 								inpc = { p, c };
-								extcases.push_back(static_cast<v3::case_>(fval * 9 + vxc_._degree - 1));
+								extcases.push_back(static_cast<v3::ccase_t>(fval * 9 + vxc_._degree - 1));
 								return true;
 							}
 						}
@@ -600,7 +600,7 @@ namespace ithkuil
 							{
 								// TODO
 								const auto [s, p, f] = static_cast<v3::newslot::vr::value_t>(v3::newslot::vr(it->second));
-								if ((s != 1 || p != 1 || f != function::stative) && state.vr_)
+								if ((s != 1 || p != 1 || f != function_t::stative) && state.vr_)
 								{
 									return false;
 								}
@@ -692,32 +692,32 @@ struct formative
 	ithkuil::v3::root_t _root;
 	ithkuil::v3::stem_t _stem;
 	ithkuil::v3::pattern_t _pattern;
-	ithkuil::v3::configuration _configuration;
-	ithkuil::v3::affiliation _affiliation;
-	ithkuil::v3::perspective _perspective;
-	ithkuil::v3::extension _extension;
-	ithkuil::v3::essence _essence;
-	ithkuil::v3::context _context;
-	ithkuil::v3::designation _designation;
-	ithkuil::v3::designation inc_designation;
-	ithkuil::v3::case_ _case;
+	ithkuil::v3::configuration_t _configuration;
+	ithkuil::v3::affiliation_t _affiliation;
+	ithkuil::v3::perspective_t _perspective;
+	ithkuil::v3::extension_t _extension;
+	ithkuil::v3::essence_t _essence;
+	ithkuil::v3::context_t _context;
+	ithkuil::v3::designation_t _designation;
+	ithkuil::v3::designation_t inc_designation;
+	ithkuil::v3::ccase_t _case;
 	ithkuil::v3::root_t inc_root;
 	ithkuil::v3::stem_t inc_stem;
 	ithkuil::v3::pattern_t inc_pattern;
-	std::optional<std::tuple<ithkuil::v3::perspective, ithkuil::v3::configuration>> inc_pc;
-	ithkuil::v3::function _function;
-	ithkuil::v3::mood _mood;
-	ithkuil::v3::illocution _illocution;
-	ithkuil::v3::relation _relation;
-	ithkuil::v3::phase _phase;
-	ithkuil::v3::sanction _sanction;
-	ithkuil::v3::valence _valence;
-	ithkuil::v3::version _version;
-	ithkuil::v3::validation _validation;
-	ithkuil::v3::aspect _aspect;
+	std::optional<std::tuple<ithkuil::v3::perspective_t, ithkuil::v3::configuration_t>> inc_pc;
+	ithkuil::v3::function_t _function;
+	ithkuil::v3::mood_t _mood;
+	ithkuil::v3::illocution_t _illocution;
+	ithkuil::v3::relation_t _relation;
+	ithkuil::v3::phase_t _phase;
+	ithkuil::v3::sanction_t _sanction;
+	ithkuil::v3::valence_t _valence;
+	ithkuil::v3::version_t _version;
+	ithkuil::v3::validation_t _validation;
+	ithkuil::v3::aspect_t _aspect;
 	ithkuil::v3::format _format;
-	ithkuil::v3::bias _bias;
-	std::vector<ithkuil::v3::case_> inc_cases;
+	ithkuil::v3::bias_t _bias;
+	std::vector<ithkuil::v3::ccase_t> inc_cases;
 	std::vector<ithkuil::v3::vxc> _vxcs;
 };
 
@@ -742,43 +742,44 @@ std::wstring f2wstr(const formative& f, bool full)
 			})->first;
 	};
 	std::wstring strbuf;
-	if (f._relation == v3::relation::unframed && full)
+	constexpr auto zzzzz = sizeof(ithkuil::v3::formative);
+	if (f._relation == v3::relation_t::unframed && full)
 	{
 		strbuf += L"UNFRAMED-";
 	}
-	else if (f._relation == v3::relation::framed)
+	else if (f._relation == v3::relation_t::framed)
 	{
 		strbuf += L"FRAMED-";
 	}
 	strbuf += rfind(v3::notation::function_map, f._function) + L"-";
 	strbuf += r2wstr(f._root) + L"/S" + std::to_wstring(f._stem) + L"/P" + std::to_wstring(f._pattern) + L"/";
 	strbuf += rfind(v3::notation::designation_map, f._designation);
-	if (f._configuration != v3::configuration::uniplex || full)
+	if (f._configuration != v3::configuration_t::uniplex || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::configuration_map, f._configuration);
 	}
-	if (f._affiliation != v3::affiliation::consolidative || full)
+	if (f._affiliation != v3::affiliation_t::consolidative || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::affiliation_map, f._affiliation);
 	}
-	if (f._perspective != v3::perspective::monadic || full)
+	if (f._perspective != v3::perspective_t::monadic || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::perspective_map, f._perspective);
 	}
-	if (f._extension != v3::extension::delimitive || full)
+	if (f._extension != v3::extension_t::delimitive || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::extension_map, f._extension);
 	}
-	if (f._essence != v3::essence::normal || full)
+	if (f._essence != v3::essence_t::normal || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::essence_map, f._essence);
 	}
-	if (f._context != v3::context::existential || full)
+	if (f._context != v3::context_t::existential || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::context_map, f._context);
@@ -805,56 +806,56 @@ std::wstring f2wstr(const formative& f, bool full)
 		strbuf += rfind(v3::notation::format_map, f._format);
 		strbuf += L":";
 	}
-	if (f._mood != v3::mood::factual || full)
+	if (f._mood != v3::mood_t::factual || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::mood_map, f._mood);
 	}
-	if (f._illocution != v3::illocution::assertive || full)
+	if (f._illocution != v3::illocution_t::assertive || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::illocution_map, f._illocution);
 	}
-	if (f._phase != v3::phase::contextual || full)
+	if (f._phase != v3::phase_t::contextual || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::phase_map, f._phase);
 	}
-	if (f._sanction != v3::sanction::propositional || full)
+	if (f._sanction != v3::sanction_t::propositional || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::sanction_map, f._sanction);
 	}
-	if (f._valence != v3::valence::monoactive || full)
+	if (f._valence != v3::valence_t::monoactive || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::valence_map, f._valence);
 	}
-	if (f._validation != v3::validation::confirmative || full)
+	if (f._validation != v3::validation_t::confirmative || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::validation_map, f._validation);
 	}
-	if (f._aspect != v3::aspect::none || full)
+	if (f._aspect != v3::aspect_t::none || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::aspect_map, f._aspect);
 	}
-	if (f._version != v3::version::processual || full)
+	if (f._version != v3::version_t::processual || full)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::version_map, f._version);
 	}
-	for (const auto& suffix : f._vxcs)
+	for (const auto& suffix_t : f._vxcs)
 	{
 		strbuf += L"-";
-		strbuf += rfind(v3::notation::suffix_map, suffix._suffix);
+		strbuf += rfind(v3::notation::suffix_map, suffix_t._suffix);
 		strbuf += L"/";
-		strbuf += std::to_wstring(suffix._type);
+		strbuf += std::to_wstring(suffix_t._type);
 		strbuf += L"/";
-		strbuf += std::to_wstring(suffix._degree);
+		strbuf += std::to_wstring(suffix_t._degree);
 	}
-	if (f._bias != v3::bias::none)
+	if (f._bias != v3::bias_t::none)
 	{
 		strbuf += L"-";
 		strbuf += rfind(v3::notation::bias_map, f._bias);
@@ -991,22 +992,22 @@ int wmain(int, wchar_t* [], wchar_t* [])
 					switch (tone)
 					{
 					case v3::ir::tone_t::falling:
-						f._version = v3::version::processual;
+						f._version = v3::version_t::processual;
 						break;
 					case v3::ir::tone_t::rising:
-						f._version = v3::version::ineffectual;
+						f._version = v3::version_t::ineffectual;
 						break;
 					case v3::ir::tone_t::low:
-						f._version = v3::version::incompletive;
+						f._version = v3::version_t::incompletive;
 						break;
 					case v3::ir::tone_t::high:
-						f._version = v3::version::completive;
+						f._version = v3::version_t::completive;
 						break;
 					case v3::ir::tone_t::falling_rising:
-						f._version = v3::version::effective;
+						f._version = v3::version_t::effective;
 						break;
 					case v3::ir::tone_t::rising_falling:
-						f._version = v3::version::positive;
+						f._version = v3::version_t::positive;
 						break;
 					default:
 						nuf << L"tone error" << std::endl;
@@ -1062,28 +1063,28 @@ int wmain(int, wchar_t* [], wchar_t* [])
 					switch (stress)
 					{
 					case v3::ir::stress::penultimate:
-						f._designation = v3::designation::informal;
-						f._relation = v3::relation::unframed;
+						f._designation = v3::designation_t::informal;
+						f._relation = v3::relation_t::unframed;
 						break;
 					case v3::ir::stress::ultimate:
-						f._designation = v3::designation::formal;
-						f._relation = v3::relation::unframed;
+						f._designation = v3::designation_t::formal;
+						f._relation = v3::relation_t::unframed;
 						break;
 					case v3::ir::stress::antepenultimate:
-						f._designation = v3::designation::informal;
-						f._relation = v3::relation::framed;
+						f._designation = v3::designation_t::informal;
+						f._relation = v3::relation_t::framed;
 						break;
 					case v3::ir::stress::preantepenultimate:
-						f._designation = v3::designation::formal;
-						f._relation = v3::relation::framed;
+						f._designation = v3::designation_t::formal;
+						f._relation = v3::relation_t::framed;
 						break;
 					}
 					f._root = xxx.root_;
 					f.inc_root = xxx.inc_root.value_or(0);
 					f._case = xxx._case;
-					f._phase = xxx.phase_.value_or(v3::phase::contextual);
-					f._sanction = xxx.sanction_.value_or(v3::sanction::propositional);
-					f._illocution = xxx.illocution_.value_or(v3::illocution::assertive);
+					f._phase = xxx.phase_.value_or(v3::phase_t::contextual);
+					f._sanction = xxx.sanction_.value_or(v3::sanction_t::propositional);
+					f._illocution = xxx.illocution_.value_or(v3::illocution_t::assertive);
 					if (xxx.ca_)
 					{
 						std::tie(f._configuration, f._affiliation, f._perspective, f._extension, f._essence) = static_cast<v3::newslot::ca::value_t>(v3::newslot::ca(*xxx.ca_));
@@ -1095,13 +1096,13 @@ int wmain(int, wchar_t* [], wchar_t* [])
 					}
 					if (xxx.vf_ || xxx.inc_pc)
 					{
-						const auto [c, format] = xxx.vf_.value_or(std::make_tuple(v3::context::existential, v3::format::none));
+						const auto [c, format] = xxx.vf_.value_or(std::make_tuple(v3::context_t::existential, v3::format::none));
 						f.inc_pc = xxx.inc_pc;
 						f.inc_cases = std::move(xxx.inc_cases);
 						f._context = c;
 						f._format = format;
 					}
-					f._bias = xxx.bias_.value_or(v3::bias::none);
+					f._bias = xxx.bias_.value_or(v3::bias_t::none);
 					f._vxcs = std::move(xxx.vxc_);
 					if (xxx.vr_)
 					{
@@ -1111,7 +1112,7 @@ int wmain(int, wchar_t* [], wchar_t* [])
 					{
 						f._pattern = 1;
 						f._stem = 1;
-						f._function = v3::function::stative;
+						f._function = v3::function_t::stative;
 					}
 					if (xxx.vp_)
 					{
@@ -1121,9 +1122,9 @@ int wmain(int, wchar_t* [], wchar_t* [])
 					{
 						std::tie(f._mood, f._illocution, std::ignore) = static_cast<v3::newslot::civi::value_t>(v3::newslot::civi(*xxx.civi_));
 					}
-					f._valence = xxx.valence_.value_or(v3::valence::monoactive);
-					f._validation = xxx.validation_.value_or(v3::validation::confirmative);
-					f._aspect = xxx.aspect_.value_or(v3::aspect::none);
+					f._valence = xxx.valence_.value_or(v3::valence_t::monoactive);
+					f._validation = xxx.validation_.value_or(v3::validation_t::confirmative);
+					f._aspect = xxx.aspect_.value_or(v3::aspect_t::none);
 
 
 
